@@ -1,4 +1,5 @@
 import 'package:ensemble/framework/stub/contacts_manager.dart';
+import 'package:ensemble/framework/stub/contacts_manager.dart' as manager;
 import 'package:flutter_contacts/flutter_contacts.dart';
 
 class ContactManagerImpl extends ContactManager {
@@ -13,8 +14,9 @@ class ContactManagerImpl extends ContactManager {
               withAccounts: true,
               withGroups: true)
           .then((contacts) {
-        final mappedContacts =
-            contacts.map((contact) => contact.toJson()).toList();
+        final mappedContacts = contacts
+            .map((contact) => manager.Contact.fromJson(contact.toJson()))
+            .toList();
         onSuccess(mappedContacts);
       }).catchError((error) {
         onError('Failed to fetch contacts: $error');
