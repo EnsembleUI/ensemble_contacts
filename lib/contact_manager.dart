@@ -25,4 +25,10 @@ class ContactManagerImpl extends ContactManager {
       onError('Failed to fetch contacts');
     }
   }
+
+  @override
+  Future<bool> requestPermission() {
+    // TODO:
+    return Future.value(false);
+  }
 }
