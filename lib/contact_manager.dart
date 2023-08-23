@@ -27,8 +27,12 @@ class ContactManagerImpl extends ContactManager {
   }
 
   @override
-  Future<bool> requestPermission() {
-    // TODO:
-    return Future.value(false);
+  Future<bool> requestPermission() async {
+    try {
+      final status = await FlutterContacts.requestPermission();
+      return status;
+    } catch (_) {
+      return false;
+    }
   }
 }
