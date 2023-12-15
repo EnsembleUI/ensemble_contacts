@@ -51,6 +51,21 @@ class ContactManagerImpl extends ContactManager {
     }
   }
 
+  @override
+  Future<void> getContactPhoto(String id, ContactPhotoSuccessCallback onSuccess,
+      ContactPhotoErrorCallback onError) async {
+    try {
+      final image = await fc.FastContacts.getContactImage(id);
+      if (image != null) {
+        onSuccess(image);
+      } else {
+        onError('Failed to fetch contact photo');
+      }
+    } catch (e) {
+      onError('Failed to fetch contact photo');
+    }
+  }
+
   /// convert to our native Contacts
   List<Contact> _toContacts(List<fc.Contact> contacts) => contacts
       .map((contact) => manager.Contact(
