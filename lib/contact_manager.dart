@@ -36,7 +36,7 @@ class ContactManagerImpl extends ContactManager {
   // }
 
   @override
-  void getPhoneContacts(
+  Future<void> getPhoneContacts(
       ContactSuccessCallback onSuccess, ContactErrorCallback onError) async {
     if (await requestPermission()) {
       try {
@@ -59,10 +59,10 @@ class ContactManagerImpl extends ContactManager {
       if (image != null) {
         onSuccess(image);
       } else {
-        onError('Failed to fetch contact photo');
+        onError('Failed to fetch contact photo - ContactID: $id');
       }
     } catch (e) {
-      onError('Failed to fetch contact photo');
+      onError('Failed to fetch contact photo - Reason: $e');
     }
   }
 
