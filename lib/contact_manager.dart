@@ -36,7 +36,7 @@ class ContactManagerImpl extends ContactManager {
   // }
 
   @override
-  void getPhoneContacts(
+  Future<void> getPhoneContacts(
       ContactSuccessCallback onSuccess, ContactErrorCallback onError) async {
     if (await requestPermission()) {
       try {
@@ -48,6 +48,21 @@ class ContactManagerImpl extends ContactManager {
       }
     } else {
       onError('Permission denied');
+    }
+  }
+
+  @override
+  Future<void> getContactPhoto(String id, ContactPhotoSuccessCallback onSuccess,
+      ContactPhotoErrorCallback onError) async {
+    try {
+      final image = await fc.FastContacts.getContactImage(id);
+      if (image != null) {
+        onSuccess(image);
+      } else {
+        onError('Failed to fetch contact photo - ContactID: $id');
+      }
+    } catch (e) {
+      onError('Failed to fetch contact photo - Reason: $e');
     }
   }
 
